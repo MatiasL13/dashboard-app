@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt-ts build",
-    "start": "yarn add vuetify && nuxt-ts start",
+    "start": "yarn install --check-files && nuxt-ts start",
     "export": "nuxt-ts export",
     "serve": "nuxt-ts serve"
   },

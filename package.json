@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt-ts build",
-    "start": "yarn install --check-files && nuxt-ts start",
+    "start": " NUXT_PORT=process.env.PORT nuxt-ts ",
     "export": "nuxt-ts export",
     "serve": "nuxt-ts serve"
   },

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt-ts build",
-    "start": " NUXT_PORT=process.env.PORT nuxt-ts ",
+    "start": " NUXT_PORT=process.env.PORT nuxt ",
     "export": "nuxt-ts export",
     "serve": "nuxt-ts serve"
   },

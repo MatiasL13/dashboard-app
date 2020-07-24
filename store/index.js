@@ -9,10 +9,14 @@ const createStore = () => {
       loadedBalance: 0,
       usdRate: 0,
       eurRate: 0,
+      ethBalance: 0,
       loadedAddress: "",
       loadedCurrency: ""
     },
     mutations: {
+      setEthBalance(state, ethBalance) {
+        state.ethBalance = ethBalance;
+      },
       setWallets(state, wallets) {
         state.loadedWallets = wallets;
       },
@@ -41,13 +45,18 @@ const createStore = () => {
           .$get("wallets")
           .then(data => {
             const postsArray = [];
-            console.log("data");
-            console.log(data);
             for (const key in data) {
-              console.log(key);
               postsArray.push({ ...data[key] });
             }
             vuexContext.commit("setWallets", postsArray);
+          })
+          .catch(e => context.error(e));
+      },
+      setEthBalance(vuexContext, address) {
+        return this.$axios
+          .$get(`wallets/${address}/balance`)
+          .then(data => {
+            vuexContext.commit("setEthBalance", data.toFixed(2));
           })
           .catch(e => context.error(e));
       },
@@ -56,6 +65,7 @@ const createStore = () => {
       },
       setAddress({ commit, state }, address) {
         commit("setAddress", address);
+        this.dispatch("setEthBalance", address);
         if (state.loadedCurrency != "") {
           this.dispatch("setCurrency", {
             currency: state.loadedCurrency,
@@ -73,11 +83,9 @@ const createStore = () => {
           })
           .catch(e => context.error(e));
 
-        console.log(`wallets/${address}/balance/${currency}`);
         return this.$axios
           .$get(`wallets/${address}/balance/${currency}`)
           .then(data => {
-            console.log(data);
             vuexContext.commit("setBalance", data);
           })
           .catch(e => context.error(e));
@@ -92,7 +100,6 @@ const createStore = () => {
         if (currency == "usd") var amount = state.usdRate;
         else var amount = state.eurRate;
 
-        console.log("se modifica " + state.loadedCurrency + " con " + amount);
         return this.$axios
           .$put(`/rates/${state.loadedCurrency}`, { amount: amount })
           .then(data => {
@@ -116,6 +123,9 @@ const createStore = () => {
       },
       loadedBalance(state) {
         return state.loadedBalance;
+      },
+      ethBalance(state) {
+        return state.ethBalance;
       },
       loadedExchange(state) {
         if (state.loadedCurrency == "usd") return state.usdRate;

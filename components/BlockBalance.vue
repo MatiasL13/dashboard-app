@@ -40,8 +40,6 @@ export default {
 
   methods: {
     getExchange() {
-      console.log("PPROP");
-      console.log(this.address);
       if (this.currency == "usd" || this.currency == "eur")
         this.$store
           .dispatch("setCurrency", {

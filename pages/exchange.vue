@@ -2,22 +2,22 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-       
-        <v-select 
+        <v-select
           v-on:change="getWalletData"
           v-model="address"
           :items="wallets"
           item-text="address"
           item-value="address"
           label="Select Wallet"
-          ></v-select>
+        ></v-select>
+        <p v-if="eth != 0">{{eth}}ETH</p>
         <v-alert v-if="isOld" type="warning">Wallet is old!</v-alert>
         <v-row justify="center">
           <v-col cols="5">
             <BlockExchange />
           </v-col>
           <v-col cols="5">
-            <BlockBalance :address="this.address"/>
+            <BlockBalance :address="this.address" />
           </v-col>
         </v-row>
       </v-col>
@@ -28,33 +28,31 @@
 
 
 <script >
-import {mapActions} from 'vuex';
+import { mapActions } from "vuex";
 import axios from "axios";
 
-	export default{
-    data(){
-      return {
+export default {
+  data() {
+    return {
       address: "select a address",
       isOld: false
-      
-      }
+    };
+  },
+  computed: {
+    wallets() {
+      return this.$store.getters.loadedWallets;
     },
-		computed:{
-			wallets(){
-          return this.$store.getters.loadedWallets;
-      },
-      
-		},
-    methods:{
-      getWalletData(address){
-        this.$store.dispatch("setAddress", address);
-        console.log(address);
-        this.$axios.$get(`/wallets/${address}/age`).then(data => {
-          this.isOld = data ;
-          console.log(data);
-        })
-      }
-
+    eth() {
+      return this.$store.getters.ethBalance;
     }
-	}
+  },
+  methods: {
+    getWalletData(address) {
+      this.$store.dispatch("setAddress", address);
+      this.$axios.$get(`/wallets/${address}/age`).then(data => {
+        this.isOld = data;
+      });
+    }
+  }
+};
 </script>

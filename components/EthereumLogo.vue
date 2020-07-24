@@ -1,13 +1,13 @@
 <template>
   <img
-    class="VuetifyLogo"
-    alt="Vuetify Logo"
-    src="/vuetify-logo.svg"
+    class="EthereumLogo"
+    alt="Ethereum Logo"
+    src="/ethereum.png"
   >
 </template>
 
 <style>
-.VuetifyLogo {
+.EthereumLogo {
   height: 180px;
   width: 180px;
   transform: rotateY(560deg);

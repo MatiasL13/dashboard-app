@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+const axios = require("axios");
 
 export default {
   /*
@@ -53,8 +54,19 @@ export default {
   /*
   ** Nuxt.js modules
   */
-  modules: [
-  ],
+  modules: ["@nuxtjs/axios"],
+
+  axios: {
+    baseURL: process.env.BASE_URL || "http://localhost:3000",
+    credentials: false,
+    proxy: false,
+    'Access-Control-Allow-Origin': '*',
+  },
+
+  env: {
+    baseUrl: process.env.BASE_URL || "http://localhost:3000"
+  },
+
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module

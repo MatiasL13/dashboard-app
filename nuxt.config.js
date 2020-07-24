@@ -13,7 +13,7 @@ export default {
   */
   target: 'server',
   server: {
-    port: process.env.PORT || 3000, // default: 3000
+    port: process.env.PORT || 8080, // default: 3000
   },
 
   /*
